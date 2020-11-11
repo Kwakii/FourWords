@@ -1,0 +1,52 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 16
+VisualStudioVersion = 16.0.30413.136
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "BlazorChat.Server", "BlazorChat\Server\BlazorChat.Server.csproj", "{73B9A2C1-2567-45AC-A2D8-A72EE21451A6}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "BlazorChat.Client", "BlazorChat\Client\BlazorChat.Client.csproj", "{2FD3F528-0080-459D-AE38-06AC860C0582}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "BlazorChat.Shared", "BlazorChat\Shared\BlazorChat.Shared.csproj", "{59BB71D6-BC28-4B95-8436-7B2AEFE1C3CB}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{73B9A2C1-2567-45AC-A2D8-A72EE21451A6}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{73B9A2C1-2567-45AC-A2D8-A72EE21451A6}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{73B9A2C1-2567-45AC-A2D8-A72EE21451A6}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{73B9A2C1-2567-45AC-A2D8-A72EE21451A6}.Release|Any CPU.Build.0 = Release|Any CPU
+		{2FD3F528-0080-459D-AE38-06AC860C0582}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{2FD3F528-0080-459D-AE38-06AC860C0582}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{2FD3F528-0080-459D-AE38-06AC860C0582}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{2FD3F528-0080-459D-AE38-06AC860C0582}.Release|Any CPU.Build.0 = Release|Any CPU
+		{59BB71D6-BC28-4B95-8436-7B2AEFE1C3CB}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{59BB71D6-BC28-4B95-8436-7B2AEFE1C3CB}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{59BB71D6-BC28-4B95-8436-7B2AEFE1C3CB}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{59BB71D6-BC28-4B95-8436-7B2AEFE1C3CB}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {7FCA0678-1881-4682-9131-AD53084174FE}
+	EndGlobalSection
+	GlobalSection(TeamFoundationVersionControl) = preSolution
+		SccNumberOfProjects = 4
+		SccEnterpriseProvider = {4CA58AB2-18FA-4F8D-95D4-32DDF27D184C}
+		SccTeamFoundationServer = https://charbonneur.visualstudio.com/
+		SccLocalPath0 = .
+		SccProjectUniqueName1 = BlazorChat\\Client\\BlazorChat.Client.csproj
+		SccProjectName1 = BlazorChat/Client
+		SccLocalPath1 = BlazorChat\\Client
+		SccProjectUniqueName2 = BlazorChat\\Server\\BlazorChat.Server.csproj
+		SccProjectName2 = BlazorChat/Server
+		SccLocalPath2 = BlazorChat\\Server
+		SccProjectUniqueName3 = BlazorChat\\Shared\\BlazorChat.Shared.csproj
+		SccProjectName3 = BlazorChat/Shared
+		SccLocalPath3 = BlazorChat\\Shared
+	EndGlobalSection
+EndGlobal

@@ -1,0 +1,139 @@
+﻿@page "/FourWordsGame"
+@using Microsoft.AspNetCore.SignalR.Client
+@inject NavigationManager NavigationManager
+@implements IDisposable
+@using Microsoft.Extensions.Logging
+@inject ILogger<FourWords> _logger
+@using BlazorChat.Shared
+@using System.Text.Json
+@using BlazorChat.Client.Pages.QuatreMots
+
+
+<h3>FourWords</h3>
+
+
+
+<!--Partie Lobby-->
+@if (Joueur == null || !Joueur.EstEnJeu())
+{    
+    <div class="form-group">
+        <label>
+            Pseudonyme:
+            <input @bind="pseudo" size="50" />
+        </label>
+    </div>
+
+    @if (!PartieEnCours)
+    {
+    <button @onclick="Jouer" disabled="@(!IsConnected || pseudo.Length < 2)">Jouer</button>
+    } else
+    {
+        <p>Il y a déjà une partie en cours, merci de patienter calmement</p>
+    }
+
+    <label>Nombre de joueurs connectés: @nbJoueursConnectes / 4</label>
+    @if (Joueur != null && Joueur.EtapeJeu == EtapeJeu.EnAttenteDeLancement)
+    {
+        <label style="color:green">Connecté: En attente de 4 joueurs</label>
+    }
+
+}
+
+@if (Joueur != null && (Joueur.EtapeJeu == EtapeJeu.EstEnTrainDeDonnerIndice || Joueur.EtapeJeu == EtapeJeu.AFiniDeDonnerIndices))
+{
+    <!--Partie donner indice-->
+    <DonnerIndice Joueur="@Joueur" hubConnection="@hubConnection">
+
+    </DonnerIndice>
+}
+
+@if (Joueur != null && (Joueur.EtapeJeu == EtapeJeu.EstEnTrainDeDeviner || Joueur.EtapeJeu == EtapeJeu.AFiniDeDeviner))
+{
+    <DevinerMot Joueur="@Joueur" hubConnection="@hubConnection"></DevinerMot>
+}
+
+@if (Joueur != null && Joueur.EtapeJeu == EtapeJeu.EcranDeFin)
+{
+    <EcranDeFin Joueur="@Joueur" hubConnection="@hubConnection"></EcranDeFin>
+}
+
+<!--Partie recevoir indice-->
+<!--Ecran de fin-->
+
+
+@code {
+
+    private HubConnection hubConnection;
+    private string pseudo = "";
+    private bool Connecte = false;
+    private Joueur Joueur = null;
+    private bool PartieEnCours = false;
+
+
+    private int nbJoueursConnectes = 0;
+
+    protected override async Task OnInitializedAsync()
+    {
+        hubConnection = new HubConnectionBuilder()
+            .WithUrl(NavigationManager.ToAbsoluteUri("/FourWords"))
+            .Build();
+
+        hubConnection.On<int>("NombreJoueurs", (nbJoueurs) =>
+        {
+            nbJoueursConnectes = nbJoueurs;
+            _logger.LogInformation("Nombre Joueur");
+            StateHasChanged();
+        });
+
+        hubConnection.On<string>("InfoJoueur", (retour) =>
+        {
+            _logger.LogInformation(retour);
+
+            try
+            {
+                Joueur = JsonSerializer.Deserialize<Joueur>(retour);
+            }
+            catch (Exception e)
+            {
+                _logger.LogInformation(e.Message);
+                Joueur = null;
+            }
+            StateHasChanged();
+        });
+
+        hubConnection.On<bool>("PartieEnCours", (enCours) =>
+        {
+            PartieEnCours = enCours;
+            StateHasChanged();
+        });
+
+
+        await hubConnection.StartAsync();
+        await hubConnection.SendAsync("Initialiser");
+    }
+
+    public bool IsConnected => hubConnection?.State == HubConnectionState.Connected;
+
+
+    public async Task Jouer()
+    {
+        await hubConnection.SendAsync("Jouer", pseudo, hubConnection.ConnectionId);
+        Connecte = true;
+    }
+
+
+    public void Dispose()
+    {
+        _logger.LogInformation("Dispose");
+        Task.Run(() =>
+        {
+            hubConnection.SendAsync("Deconnecter", pseudo, hubConnection.ConnectionId);
+        }).Wait();
+
+        _ = hubConnection.DisposeAsync();
+    }
+
+
+}
+
+

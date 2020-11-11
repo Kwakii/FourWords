@@ -1,0 +1,9 @@
+C:\Users\crapo\source\repos\BlazorChat\BlazorChat\Shared\bin\Release\netstandard2.1\BlazorChat.Shared.deps.json
+C:\Users\crapo\source\repos\BlazorChat\BlazorChat\Shared\bin\Release\netstandard2.1\BlazorChat.Shared.dll
+C:\Users\crapo\source\repos\BlazorChat\BlazorChat\Shared\bin\Release\netstandard2.1\BlazorChat.Shared.pdb
+C:\Users\crapo\source\repos\BlazorChat\BlazorChat\Shared\obj\Release\netstandard2.1\BlazorChat.Shared.csprojAssemblyReference.cache
+C:\Users\crapo\source\repos\BlazorChat\BlazorChat\Shared\obj\Release\netstandard2.1\BlazorChat.Shared.AssemblyInfoInputs.cache
+C:\Users\crapo\source\repos\BlazorChat\BlazorChat\Shared\obj\Release\netstandard2.1\BlazorChat.Shared.AssemblyInfo.cs
+C:\Users\crapo\source\repos\BlazorChat\BlazorChat\Shared\obj\Release\netstandard2.1\BlazorChat.Shared.csproj.CoreCompileInputs.cache
+C:\Users\crapo\source\repos\BlazorChat\BlazorChat\Shared\obj\Release\netstandard2.1\BlazorChat.Shared.dll
+C:\Users\crapo\source\repos\BlazorChat\BlazorChat\Shared\obj\Release\netstandard2.1\BlazorChat.Shared.pdb

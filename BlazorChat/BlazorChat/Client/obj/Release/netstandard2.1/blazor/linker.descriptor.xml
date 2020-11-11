@@ -1,0 +1,5 @@
+﻿<linker>
+  <assembly fullname="BlazorChat.Client">
+    <type fullname="*" required="true" />
+  </assembly>
+</linker>

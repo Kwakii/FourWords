@@ -1,0 +1,36 @@
+﻿@using Microsoft.AspNetCore.SignalR.Client
+@inject NavigationManager NavigationManager
+@using Microsoft.Extensions.Logging
+@inject ILogger<FourWords> _logger
+@using BlazorChat.Shared
+@using System.Text.Json
+@using BlazorChat.Client.Pages.QuatreMots
+
+<h3>EcranDeFin</h3>
+
+@code {
+
+    [Parameter]
+    public Joueur Joueur { get; set; }
+
+
+    [Parameter]
+    public HubConnection hubConnection { get; set; }
+
+    public List<Joueur> Joueurs { get; set; }
+
+    protected override async Task OnInitializedAsync()
+    {
+        //Récupérer les trois mots
+        hubConnection.On<List<String>>("RecupererJoueurs", (joueurs) =>
+        {
+
+
+            StateHasChanged();
+        });
+
+        await hubConnection.SendAsync("RecupererJoueurs");
+
+    }
+
+}

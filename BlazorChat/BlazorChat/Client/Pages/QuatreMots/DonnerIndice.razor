@@ -1,0 +1,83 @@
+﻿@using Microsoft.AspNetCore.SignalR.Client
+@inject NavigationManager NavigationManager
+@using Microsoft.Extensions.Logging
+@inject ILogger<FourWords> _logger
+@using BlazorChat.Shared
+@using System.Text.Json
+@using BlazorChat.Client.Pages.QuatreMots
+
+<h3>DonnerIndice</h3>
+
+@if (Joueur != null)
+{
+    <p>@Joueur.ConnectionId</p>
+    <p>@Joueur.EtapeJeu.ToString()</p>
+
+    foreach(string mot in Joueur.Indices)
+    {
+        <p>@mot</p>
+    }
+}
+
+<!--Ici on doit faire deviner 3 mots-->
+
+
+@foreach (MutableKeyValue<string, string> mot in MotsAFaireDeviner)
+{
+    <div class="form-group">
+        <label>
+            Mot à deviner: @mot.Key
+            <input @bind="@mot.Value" size="50" />
+        </label>
+    </div>
+}
+
+<button @onclick="@EnvoyerIndices">C'est ok !</button>
+
+@if (Joueur != null && Joueur.EtapeJeu == EtapeJeu.AFiniDeDonnerIndices)
+{
+    <p>C'est envoyé ! En attente des autres joueurs</p>
+}
+
+
+
+@code {
+
+    [Parameter]
+    public Joueur Joueur { get; set; }
+
+
+    [Parameter]
+    public HubConnection hubConnection { get; set; }
+
+    private List<MutableKeyValue<string, string>> MotsAFaireDeviner = new List<MutableKeyValue<string, string>>();
+
+
+    protected override async Task OnInitializedAsync()
+    {
+        //Récupérer les trois mots
+        hubConnection.On<List<String>>("MotsAFaireDeviner", (motsAFaireDeviner) =>
+        {
+            _logger.LogInformation("On arrive dans client mot à faire deviner");
+
+            foreach (string mot in motsAFaireDeviner)
+            {
+                MotsAFaireDeviner.Add(new MutableKeyValue<string, string>(mot, ""));
+            }
+
+            StateHasChanged();
+        });
+
+        await hubConnection.SendAsync("RecupererMotsAFaireDeviner");
+
+    }
+
+    public async Task EnvoyerIndices()
+    {
+        string envoi = JsonSerializer.Serialize(MotsAFaireDeviner);
+
+        _logger.LogInformation("On envoi les mots" + envoi.ToString());
+        await hubConnection.SendAsync("EnvoyerIndices", envoi);
+    }
+
+}

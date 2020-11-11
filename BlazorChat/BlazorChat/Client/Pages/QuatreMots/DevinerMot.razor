@@ -1,0 +1,49 @@
+﻿@using Microsoft.AspNetCore.SignalR.Client
+@inject NavigationManager NavigationManager
+@using Microsoft.Extensions.Logging
+@inject ILogger<FourWords> _logger
+@using BlazorChat.Shared
+@using System.Text.Json
+@using BlazorChat.Client.Pages.QuatreMots
+
+<h3>DevinerMot</h3>
+
+@if (Joueur != null)
+{
+    @foreach (string indice in Joueur.Indices)
+    {
+        <label>@indice</label>
+    }
+
+    <div class="form-group">
+        <label>
+            Votre proposition:
+            <input @bind="@proposition" size="50" />
+        </label>
+    </div>
+
+    <button @onclick="EnvoyerProposition">Envoyer proposition</button>
+
+    @if (Joueur.EtapeJeu == EtapeJeu.AFiniDeDeviner)
+    {
+        <p>En attente des autres joueurs</p>
+    }
+}
+
+@code {
+    [Parameter]
+    public Joueur Joueur { get; set; }
+
+    [Parameter]
+    public HubConnection hubConnection { get; set; }
+
+    private string proposition;
+
+    public async Task EnvoyerProposition()
+    {
+
+        _logger.LogInformation("On envoi la proposition" + proposition.ToString());
+        await hubConnection.SendAsync("EnvoyerProposition", proposition);
+    }
+
+}

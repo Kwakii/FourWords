@@ -1,0 +1,19 @@
+﻿@page "/mescouilles"
+@inject HttpClient Http
+<h3>Test</h3>
+
+<p>@mescouilles</p>
+
+
+@code {
+
+    private string mescouilles = "";
+
+
+    protected override async Task OnInitializedAsync()
+    {
+        mescouilles = await Http.GetFromJsonAsync<string>("Test");
+    }
+
+
+}
